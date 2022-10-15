@@ -14,6 +14,6 @@ namespace SharedView.Model
         public string address { get; set; }
 
         [Required(ErrorMessage = "Please fill in the required information")]
-        public int companyId { get; set; }
+        public Company companyId { get; set; }
     }
 }

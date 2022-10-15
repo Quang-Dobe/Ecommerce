@@ -30,7 +30,7 @@ namespace SharedView.Model
 
         public double rating { get; set; }
 
-        public int productSiteId { get; set; }
+        public ProductSite productSiteId { get; set; }
 
 
         public DateTime createdDate { get; set; }

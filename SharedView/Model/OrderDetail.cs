@@ -5,11 +5,11 @@ namespace SharedView.Model
 {
     public class OrderDetail
     {
-        public int customerId { get; set; }
+        public CustomerAccount accountId { get; set; }
 
-        public int productId { get; set; }
+        public Product productId { get; set; }
 
-        public int orderId { get; set; }
+        public Order orderId { get; set; }
 
         [Column("Number of product")]
         public int number { get; set; }
