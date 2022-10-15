@@ -25,10 +25,8 @@ namespace Backend.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<OrderDetail>()
-                .HasKey(c => new { c.customerId, c.productId });
-
-
+            //modelBuilder.Entity<OrderDetail>()
+            //    .HasKey(c => new { c.accountId, c.productId, c.orderId });
 
             // Just avoid bug :D
             // Bug when using default Identity

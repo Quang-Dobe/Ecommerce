@@ -5,7 +5,7 @@ namespace SharedView.Model
     public class Company
     {
         [Key]
-        public int companyId { get; set; }
+        public int id { get; set; }
 
         public string companyName { get; set; }
 

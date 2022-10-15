@@ -5,7 +5,7 @@ namespace SharedView.Model
     public class ProductSite
     {
         [Key]
-        public int productSiteId { get; set; }
+        public int id { get; set; }
 
         [Required(ErrorMessage = "Please fill in the required information")]
         public string country { get; set; }

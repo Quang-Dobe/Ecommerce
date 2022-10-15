@@ -7,7 +7,7 @@ namespace SharedView.Model
     public class Product
     {
         [Key]
-        public int productId { get; set; }
+        public int id { get; set; }
 
         [Required(ErrorMessage = "Please fill in the required information")]
         [Range(1, 30, ErrorMessage = "Product's name must be between 1 and 30 characters")]

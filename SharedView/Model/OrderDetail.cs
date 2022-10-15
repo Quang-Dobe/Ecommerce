@@ -1,11 +1,13 @@
 ﻿using SharedView.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SharedView.Model
 {
     public class OrderDetail
     {
-        public CustomerAccount accountId { get; set; }
+        [Key]
+        public int id { get; set; }
 
         public Product productId { get; set; }
 

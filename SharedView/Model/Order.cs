@@ -7,9 +7,11 @@ namespace SharedView.Model
     public class Order
     {
         [Key]
-        public int orderId { get; set; }
+        public int id { get; set; }
 
         public CustomerAccount accountId { get; set; }
+
+        public List<OrderDetail> orderDetails { get; set; }
 
         public DateTime dateOfPurchase { get; set; }
 
