@@ -26,6 +26,10 @@ namespace SharedView.Model
         [Required(ErrorMessage = "Please fill in the required information")]
         public int quantity { get; set; }
 
+        public int inventoryNumber { get; set; }
+
+        public double rating { get; set; }
+
         public ProductSite productSiteId { get; set; }
 
 
