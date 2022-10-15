@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Backend.Migrations
 {
-    public partial class InitializeDatabase : Migration
+    public partial class reCreatedDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,19 +13,20 @@ namespace Backend.Migrations
                 name: "companies",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                    companyId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    companyName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_companies", x => x.id);
+                    table.PrimaryKey("PK_companies", x => x.companyId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "customerAccounts",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    accountId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     password = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -34,25 +35,26 @@ namespace Backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_customerAccounts", x => x.id);
+                    table.PrimaryKey("PK_customerAccounts", x => x.accountId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "customers",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    customerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     firstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     lastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     middleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    accountId = table.Column<int>(type: "int", nullable: false),
                     createdDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     updatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     address = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_customers", x => x.id);
+                    table.PrimaryKey("PK_customers", x => x.customerId);
                 });
 
             migrationBuilder.CreateTable(
@@ -61,9 +63,9 @@ namespace Backend.Migrations
                 {
                     customerId = table.Column<int>(type: "int", nullable: false),
                     productId = table.Column<int>(type: "int", nullable: false),
+                    orderId = table.Column<int>(type: "int", nullable: false),
                     Numberofproduct = table.Column<int>(name: "Number of product", type: "int", nullable: false),
-                    rating = table.Column<int>(type: "int", nullable: false),
-                    comment = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    rating = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,44 +76,30 @@ namespace Backend.Migrations
                 name: "orders",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    orderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     customerId = table.Column<int>(type: "int", nullable: false),
+                    dateOfPurchase = table.Column<DateTime>(type: "datetime2", nullable: false),
                     total = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_orders", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "productInfos",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    inventoryNumber = table.Column<int>(type: "int", nullable: false),
-                    rating = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_productInfos", x => x.id);
+                    table.PrimaryKey("PK_orders", x => x.orderId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "productSites",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    productSiteId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    companyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    companyID = table.Column<int>(type: "int", nullable: false)
+                    companyId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_productSites", x => x.id);
+                    table.PrimaryKey("PK_productSites", x => x.productSiteId);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,43 +212,34 @@ namespace Backend.Migrations
                 name: "products",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    productId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Productsname = table.Column<string>(name: "Product's name", type: "nvarchar(max)", nullable: false),
                     description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     productType = table.Column<int>(type: "int", nullable: false),
                     price = table.Column<int>(type: "int", nullable: false),
                     quantity = table.Column<int>(type: "int", nullable: false),
+                    inventoryNumber = table.Column<int>(type: "int", nullable: false),
+                    rating = table.Column<double>(type: "float", nullable: false),
                     productSiteId = table.Column<int>(type: "int", nullable: false),
                     createdDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     updatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Companyid = table.Column<int>(type: "int", nullable: true),
-                    Orderid = table.Column<int>(type: "int", nullable: true)
+                    companyId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_products", x => x.id);
+                    table.PrimaryKey("PK_products", x => x.productId);
                     table.ForeignKey(
-                        name: "FK_products_companies_Companyid",
-                        column: x => x.Companyid,
+                        name: "FK_products_companies_companyId",
+                        column: x => x.companyId,
                         principalTable: "companies",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_products_orders_Orderid",
-                        column: x => x.Orderid,
-                        principalTable: "orders",
-                        principalColumn: "id");
+                        principalColumn: "companyId");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_Companyid",
+                name: "IX_products_companyId",
                 table: "products",
-                column: "Companyid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_products_Orderid",
-                table: "products",
-                column: "Orderid");
+                column: "companyId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -275,7 +254,7 @@ namespace Backend.Migrations
                 name: "orderDetails");
 
             migrationBuilder.DropTable(
-                name: "productInfos");
+                name: "orders");
 
             migrationBuilder.DropTable(
                 name: "products");
@@ -306,9 +285,6 @@ namespace Backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "companies");
-
-            migrationBuilder.DropTable(
-                name: "orders");
         }
     }
 }

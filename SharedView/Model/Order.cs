@@ -5,9 +5,9 @@ namespace SharedView.Model
 {
     public class Order
     {
-        public int id { get; set; }
+        public int orderId { get; set; }
 
-        public CustomerAccount customerId { get; set; }
+        public int customerId { get; set; }
 
         public DateTime dateOfPurchase { get; set; }
 

@@ -13,7 +13,6 @@ namespace Backend.Data
         public DbSet<CustomerAccount> customerAccounts { get; set; }
         public DbSet<Company> companies { get; set; }
         public DbSet<Product> products { get; set; }
-        public DbSet<ProductInfo> productInfos { get; set; }
         public DbSet<ProductSite> productSites { get; set; }
         public DbSet<Order> orders { get; set; }
         public DbSet<OrderDetail> orderDetails { get; set; }
@@ -28,21 +27,21 @@ namespace Backend.Data
         {
             modelBuilder.Entity<OrderDetail>()
                 .HasKey(c => new { c.customerId, c.productId });
+
+
+
+            // Just avoid bug :D
+            // Bug when using default Identity
             modelBuilder.Entity<IdentityUserLogin<string>>(builder =>
             {
                 builder.HasNoKey();
             });
-
-
-            modelBuilder.Entity<OrderDetail>()
-                .HasKey(c => new { c.customerId, c.productId });
+            
             modelBuilder.Entity<IdentityUserRole<string>>(builder =>
             {
                 builder.HasNoKey();
             });
-
-            modelBuilder.Entity<OrderDetail>()
-                .HasKey(c => new { c.customerId, c.productId });
+            
             modelBuilder.Entity<IdentityUserToken<string>>(builder =>
             {
                 builder.HasNoKey();

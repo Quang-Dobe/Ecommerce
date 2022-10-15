@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(EcommerceDBcontext))]
-    [Migration("20221015072607_InitializeDatabase")]
-    partial class InitializeDatabase
+    [Migration("20221015093244_reCreatedDatabase")]
+    partial class reCreatedDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -186,24 +186,31 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("SharedView.Model.Company", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("companyId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("companyId"), 1L, 1);
 
-                    b.HasKey("id");
+                    b.Property<string>("companyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("companyId");
 
                     b.ToTable("companies");
                 });
 
             modelBuilder.Entity("SharedView.Model.Customer", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("customerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("customerId"), 1L, 1);
+
+                    b.Property<int>("accountId")
+                        .HasColumnType("int");
 
                     b.Property<string>("address")
                         .IsRequired()
@@ -227,18 +234,18 @@ namespace Backend.Migrations
                     b.Property<DateTime>("updatedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("id");
+                    b.HasKey("customerId");
 
                     b.ToTable("customers");
                 });
 
             modelBuilder.Entity("SharedView.Model.CustomerAccount", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("accountId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("accountId"), 1L, 1);
 
                     b.Property<DateTime>("dateOfBirth")
                         .HasColumnType("datetime2");
@@ -254,26 +261,29 @@ namespace Backend.Migrations
                     b.Property<int>("phoneNumber")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("accountId");
 
                     b.ToTable("customerAccounts");
                 });
 
             modelBuilder.Entity("SharedView.Model.Order", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("orderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("orderId"), 1L, 1);
 
                     b.Property<int>("customerId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("dateOfPurchase")
+                        .HasColumnType("datetime2");
+
                     b.Property<double>("total")
                         .HasColumnType("float");
 
-                    b.HasKey("id");
+                    b.HasKey("orderId");
 
                     b.ToTable("orders");
                 });
@@ -286,13 +296,12 @@ namespace Backend.Migrations
                     b.Property<int>("productId")
                         .HasColumnType("int");
 
-                    b.Property<string>("comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("number")
                         .HasColumnType("int")
                         .HasColumnName("Number of product");
+
+                    b.Property<int>("orderId")
+                        .HasColumnType("int");
 
                     b.Property<int>("rating")
                         .HasColumnType("int");
@@ -304,16 +313,13 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("SharedView.Model.Product", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("productId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("productId"), 1L, 1);
 
-                    b.Property<int?>("Companyid")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Orderid")
+                    b.Property<int?>("companyId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("createdDate")
@@ -322,6 +328,9 @@ namespace Backend.Migrations
                     b.Property<string>("description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("inventoryNumber")
+                        .HasColumnType("int");
 
                     b.Property<int>("price")
                         .HasColumnType("int");
@@ -340,61 +349,39 @@ namespace Backend.Migrations
                     b.Property<int>("quantity")
                         .HasColumnType("int");
 
+                    b.Property<double>("rating")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("updatedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("id");
+                    b.HasKey("productId");
 
-                    b.HasIndex("Companyid");
-
-                    b.HasIndex("Orderid");
+                    b.HasIndex("companyId");
 
                     b.ToTable("products");
                 });
 
-            modelBuilder.Entity("SharedView.Model.ProductInfo", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<int>("inventoryNumber")
-                        .HasColumnType("int");
-
-                    b.Property<double>("rating")
-                        .HasColumnType("float");
-
-                    b.HasKey("id");
-
-                    b.ToTable("productInfos");
-                });
-
             modelBuilder.Entity("SharedView.Model.ProductSite", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("productSiteId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("productSiteId"), 1L, 1);
 
                     b.Property<string>("address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("companyID")
+                    b.Property<int>("companyId")
                         .HasColumnType("int");
-
-                    b.Property<string>("companyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("country")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("id");
+                    b.HasKey("productSiteId");
 
                     b.ToTable("productSites");
                 });
@@ -403,21 +390,12 @@ namespace Backend.Migrations
                 {
                     b.HasOne("SharedView.Model.Company", null)
                         .WithMany("products")
-                        .HasForeignKey("Companyid");
-
-                    b.HasOne("SharedView.Model.Order", null)
-                        .WithMany("product")
-                        .HasForeignKey("Orderid");
+                        .HasForeignKey("companyId");
                 });
 
             modelBuilder.Entity("SharedView.Model.Company", b =>
                 {
                     b.Navigation("products");
-                });
-
-            modelBuilder.Entity("SharedView.Model.Order", b =>
-                {
-                    b.Navigation("product");
                 });
 #pragma warning restore 612, 618
         }

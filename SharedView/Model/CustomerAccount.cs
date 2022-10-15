@@ -7,7 +7,7 @@ namespace SharedView.Model
     public class CustomerAccount
     {
         [Key]
-        public int id { get; set; }
+        public int accountId { get; set; }
 
         [Display(Name = "Email address")]
         [Required(ErrorMessage = "Please fill in the required information")]
