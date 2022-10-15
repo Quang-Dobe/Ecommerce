@@ -17,7 +17,8 @@ namespace SharedView.Model
 
         public string middleName { get; set; }
 
-        public int accountID { get; set; }
+        // Reforeign key: Customer_accountID -> CustomerAccount_id
+        public CustomerAccount accountID { get; set; }
 
         public DateTime createdDate { get; set; }
 

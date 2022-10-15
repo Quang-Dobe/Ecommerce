@@ -26,7 +26,7 @@ namespace SharedView.Model
         [Required(ErrorMessage = "Please fill in the required information")]
         public int quantity { get; set; }
 
-        public int productSiteId { get; set; }
+        public ProductSite productSiteId { get; set; }
 
 
         public DateTime createdDate { get; set; }

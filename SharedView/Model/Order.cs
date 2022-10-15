@@ -1,4 +1,5 @@
 ﻿using SharedView.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SharedView.Model
 {
@@ -6,9 +7,9 @@ namespace SharedView.Model
     {
         public int id { get; set; }
 
-        public int customerId { get; set; }
+        public CustomerAccount customerId { get; set; }
 
-        public List<Product> product { get; set; }
+        public DateTime dateOfPurchase { get; set; }
 
         public double total { get; set; }
     }

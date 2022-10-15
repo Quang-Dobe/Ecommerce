@@ -10,7 +10,5 @@ namespace SharedView.Model
         public int inventoryNumber { get; set; }
 
         public double rating { get; set; }
-
-        public List<string> comment;
     }
 }
