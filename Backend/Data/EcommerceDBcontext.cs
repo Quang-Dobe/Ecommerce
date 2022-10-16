@@ -20,6 +20,8 @@ namespace Backend.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // Get connection to local server (Instead of getting connection at Program.cs)
+            // But it still needs to be setted AddDbContext
             optionsBuilder.UseSqlServer("Server=.;Database=Ecommerce;Trusted_Connection=True;TrustServerCertificate=True");
         }
 
